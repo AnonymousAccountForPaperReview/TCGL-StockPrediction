@@ -47,7 +47,7 @@ for file in files:
 # Darkcausual distance
 print("calculating Dark-Causuality distance")
 g = np.load(
-    "./causal/h0_s&p500/h0.npy"
+    path + "causal/h0/h0.npy"
 )
 
 st = time.time()
@@ -59,9 +59,9 @@ for i in range(9):
     for j in range(9):
         if i == j:
             pos_mul[i, j] = 1
-        if i == 474 - j:
+        if i == 9 - j:
             neg_mul[i, j] = 1
-        if not (i == j or i == 474 - j):
+        if not (i == j or i == 9 - j):
             dark_mul[i, j] = 1
 
 now = 0

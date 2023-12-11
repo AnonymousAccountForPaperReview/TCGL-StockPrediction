@@ -113,7 +113,7 @@ if __name__ == "__main__":
 
     os.makedirs(f"immediate_data/{args.data}/h{horizon}", exist_ok=1)
 
-    path = f"immediate_data/{args.data}/h{horizon}"
+    path = f"immediate_data/{args.data}"
 
     close_price = preprocess(data)
 
@@ -129,7 +129,7 @@ if __name__ == "__main__":
 
     manager = multiprocessing.Manager()
     mg_list = manager.list()
-    pool = multiprocessing.Pool(processes=40)
+    pool = multiprocessing.Pool(processes=20)
 
     for i in range(total_stocks):
         stockX = close_price.iloc[:, i]
@@ -168,7 +168,7 @@ if __name__ == "__main__":
         causal_matrices[:, :, :, item[2], item[3]] = item[0]
         causal_matrices[:, :, :, item[3], item[2]] = item[1]
 
-    np.save(path + f"/h{horizon}.npy", causal_matrices)
+    np.save(path + f"/causal/h{horizon}/h{horizon}.npy", causal_matrices)
     print(
         "emdim={}, lag={}, method={}, window={}, nday={}, threshold={}, horizon={}".format(
             E, tau, method, cau_window, cau_len, threshold, horizon

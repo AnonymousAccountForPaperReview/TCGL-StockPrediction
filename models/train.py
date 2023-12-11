@@ -17,7 +17,7 @@ faulthandler.enable()
 
 parser = argparse.ArgumentParser("GAT-TCG")
 parser.add_argument(
-    "--path", type=str, help="path of dataset", default="datasets/s&p500/"
+    "--path", type=str, help="path of dataset", default="immediate_data/s&p500/"
 )
 parser.add_argument("--tau", type=int, help="tau-day prediction", default=9)
 parser.add_argument(
@@ -68,7 +68,7 @@ train_causal = []
 # Loading the dark causality matrix
 dark_list = []
 for h in ["h3", "h5", "h14"]:  # args.h_list
-    tmp = np.load(f"./causal/{h}_s&p500/{h}.npy")
+    tmp = np.load(args.path+f"causal/{h}/{h}.npy")
     tmp[np.isnan(tmp)] = 0
     dark_list.append(tmp)
     del tmp
@@ -78,7 +78,7 @@ del dark_list
 tryd = torch.tensor(tryd, dtype=torch.float).view(-1, tryd.shape[3], 475, 475)
 
 # Loading macro data for GAT-TCG
-macro_data = pd.read_csv("./datasets/s&p500/Macro_data.csv")
+macro_data = pd.read_csv(args.path+"Macro_data.csv")
 macro_data = np.array(macro_data)
 
 print(macro_data.shape, len(date_list))
